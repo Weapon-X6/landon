@@ -1,8 +1,30 @@
-import React from 'react';
-import facilitiesData from './data/facilities.json';
-import servicesAndAmenitiesData from './data/services_and_amenities.json';
+import React, {useState, useEffect} from 'react';
+//import facilitiesData from './data/facilities.json';
+//import servicesAndAmenitiesData from './data/services_and_amenities.json';
 
 const Grace = () => {
+  const [facilitiesData, setfacilitiesData] = useState([]);
+  const [servicesAndAmenitiesData, setServicesAndAmenitiesData] = useState([]);
+
+  const loadfacilitiesData = async() => {
+    const resp = await fetch('https://d4lqayj2ff.execute-api.ca-central-1.amazonaws.com/Production/facilities');
+    let jsonData = await resp.json();
+
+    setfacilitiesData(jsonData);
+  }
+
+  const loadServicesAndAmenitiesData = async() => {
+    const resp = await fetch('https://d4lqayj2ff.execute-api.ca-central-1.amazonaws.com/Production/services');
+    const jsonData = await resp.json();
+
+    setServicesAndAmenitiesData(jsonData);
+  }
+
+  useEffect(() => {
+    loadfacilitiesData();
+    loadServicesAndAmenitiesData();
+  }, []);
+
     return(
         <div className="scene" id="hotelinfo">
         <article className="heading">
